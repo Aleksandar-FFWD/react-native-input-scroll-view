@@ -105,6 +105,7 @@ export default class extends Component {
             multilineInputStyle,
             children,
             useAnimatedScrollView,
+            contentContainerStyle
             ...otherProps,
         } = this.props;
 
@@ -123,12 +124,12 @@ export default class extends Component {
                 : ScrollView;
 
         return (
-            <KeyboardAvoidingView behavior={isIOS ? 'padding' : null}>
+            <KeyboardAvoidingView style={{ flex: 1, backgroundColor: 'red' }} behavior={isIOS ? 'padding' : null}>
                 <View style={styles.wrap}>
                     <ScrollComponent ref={this._onRef}
                         onMomentumScrollEnd={this._onMomentumScrollEnd}
                         onFocusCapture={this._onFocus} {...otherProps}>
-                        <View style={{ marginBottom: contentBottomOffset }}
+                        <View style={[{ marginBottom: contentBottomOffset }, contentContainerStyle]}
                             onStartShouldSetResponderCapture={isIOS ? this._onTouchStart : null}
                             onResponderMove={this._onTouchMove}
                             onResponderRelease={this._onTouchEnd}>
