@@ -105,7 +105,7 @@ export default class extends Component {
             multilineInputStyle,
             children,
             useAnimatedScrollView,
-            contentContainerStyle
+            contentContainerStyle,
             ...otherProps,
         } = this.props;
 
@@ -118,10 +118,7 @@ export default class extends Component {
 
         const newChildren = this._cloneDeepComponents(children);
 
-        const ScrollComponent =
-            useAnimatedScrollView
-                ? Animated.ScrollView
-                : ScrollView;
+        const ScrollComponent = useAnimatedScrollView ? Animated.ScrollView : ScrollView;
 
         return (
             <KeyboardAvoidingView style={{ flex: 1, backgroundColor: 'red' }} behavior={isIOS ? 'padding' : null}>
