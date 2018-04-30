@@ -106,6 +106,7 @@ export default class extends Component {
             children,
             useAnimatedScrollView,
             contentContainerStyle,
+            containerStyle,
             ...otherProps,
         } = this.props;
 
@@ -123,23 +124,34 @@ export default class extends Component {
         return (
             <KeyboardAvoidingView behavior={isIOS ? 'padding' : null}>
                 <View style={styles.wrap}>
-                    <ScrollComponent ref={this._onRef}
+                    <ScrollComponent
+                        ref={this._onRef}
                         onMomentumScrollEnd={this._onMomentumScrollEnd}
-                        onFocusCapture={this._onFocus} {...otherProps}>
-                        <View style={[{ marginBottom: contentBottomOffset }, contentContainerStyle]}
+                        onFocusCapture={this._onFocus}
+                        contentContainerStyle={[styles.scrollContentContainer, contentContainerStyle]}
+                        {...otherProps}
+                    >
+                        <View
+                            style={[{ marginBottom: contentBottomOffset }, containerStyle]}
                             onStartShouldSetResponderCapture={isIOS ? this._onTouchStart : null}
                             onResponderMove={this._onTouchMove}
-                            onResponderRelease={this._onTouchEnd}>
+                            onResponderRelease={this._onTouchEnd}
+                        >
                             {newChildren}
-                            <View style={styles.hidden}
-                                pointerEvents="none">
+                            <View
+                                style={styles.hidden}
+                                pointerEvents="none"
+                            >
                                 {
                                     measureInputVisible &&
-                                    <TextInput style={[multilineInputStyle, { width: measureInputWidth }]}
+
+                                    <TextInput
+                                        style={[multilineInputStyle, { width: measureInputWidth }]}
                                         value={measureInputValue}
                                         onContentSizeChange={this._onContentSizeChangeMeasureInput}
                                         editable={false}
-                                        multiline />
+                                        multiline
+                                    />
                                 }
                             </View>
                         </View>
@@ -448,10 +460,13 @@ function isArray(arr) {
 }
 
 const styles = StyleSheet.create({
+    scrollContentContainer: {
+        flexGrow: 1,
+        backgroundColor: 'transparent',
+    },
     wrap: {
         height: '100%',
     },
-
     hidden: {
         position: 'absolute',
         top: 0,
